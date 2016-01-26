@@ -2,17 +2,20 @@
 # https://github.com/pilarmolinalopez/mayaUtils
 import maya.cmds as cmds
 
+iterAttr = 'aiSubdivIterations'
+typeAttr = 'aiSubdivType'
+nIter = 2
+typeVal = 1 # Catmull-Clark
+
+# List selected geo in scene
 geoList = cmds.ls(sl=True, o=True, dag=True, s=True)
 
-smoothAttrName = "aiSubdivIterations"
-smoothValue = 2
-typeAttrName = "aiSubdivType"
-typeValue = 1
-
 for geo in geoList:
-    if cmds.attributeQuery(smoothAttrName, node=geo, ex=True):
-        print "Setting %s.%s to %d" % (geo, smoothAttrName, smoothValue)
-        cmds.setAttr("%s.%s" % (geo, smoothAttrName), smoothValue)
-    if cmds.attributeQuery(typeAttrName, node=geo, ex=True):
-        print "Setting %s.%s to %d" % (geo, typeAttrName, typeValue)
-        cmds.setAttr("%s.%s" % (geo, typeAttrName), typeValue)
+    # Set number of iterations
+    if cmds.attributeQuery(iterAttr, node=geo, ex=True):
+        print "Setting %s.%s to %d" % (geo, iterAttr, nIter)
+        cmds.setAttr("%s.%s" % (geo, iterAttr), nIter)
+    # Set type of subdivision
+    if cmds.attributeQuery(typeAttr, node=geo, ex=True):
+        print "Setting %s.%s to %d" % (geo, typeAttr, typeVal)
+        cmds.setAttr("%s.%s" % (geo, typeAttr), typeVal)
